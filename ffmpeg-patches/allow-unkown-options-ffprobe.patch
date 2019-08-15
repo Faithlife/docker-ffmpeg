@@ -1,0 +1,14 @@
+diff --git a/fftools/ffprobe.c b/fftools/ffprobe.c
+index 3becb6330e..b2d1ad1b93 100644
+--- a/fftools/ffprobe.c
++++ b/fftools/ffprobe.c
+@@ -2860,8 +2860,7 @@ static int open_input_file(InputFile *ifile, const char *filename)
+     if (scan_all_pmts_set)
+         av_dict_set(&format_opts, "scan_all_pmts", NULL, AV_DICT_MATCH_CASE);
+     if ((t = av_dict_get(format_opts, "", NULL, AV_DICT_IGNORE_SUFFIX))) {
+-        av_log(NULL, AV_LOG_ERROR, "Option %s not found.\n", t->key);
+-        return AVERROR_OPTION_NOT_FOUND;
++        av_log(NULL, AV_LOG_WARNING, "Option %s not found.\n", t->key);
+     }
+ 
+     if (find_stream_info) {
