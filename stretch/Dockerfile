@@ -8,8 +8,12 @@ RUN apt-get update && \
     autoconf \
     automake \
     build-essential \
+    ca-certificates \
     libfdk-aac-dev \
     libmp3lame-dev \
+    libnuma-dev \
+    libopus-dev \
+    libssl-dev \
     libtheora-dev \
     libtool \
     libvorbis-dev \
@@ -29,8 +33,10 @@ RUN wget -q http://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.bz2 && \
   echo "${FFMPEG_SHA256SUM}  ffmpeg-${FFMPEG_VERSION}.tar.bz2" | sha256sum -c && \
   tar xf ffmpeg-${FFMPEG_VERSION}.tar.bz2 && \
   rm ffmpeg-${FFMPEG_VERSION}.tar.bz2
+COPY ffmpeg-patches ./ffmpeg-patches
 
 WORKDIR /usr/local/src/ffmpeg-${FFMPEG_VERSION}
+RUN cat ../ffmpeg-patches/* | patch -p1
 RUN ./configure \
     --prefix=/opt/ffmpeg \
     --disable-doc \
@@ -39,17 +45,19 @@ RUN ./configure \
     --enable-gpl \
     --enable-libfdk_aac \
     --enable-libmp3lame \
+    --enable-libopus \
     --enable-libvorbis \
     --enable-libvpx \
     --enable-libx264 \
     --enable-libx265 \
-    --enable-nonfree
+    --enable-nonfree \
+    --enable-openssl
 RUN make
 
 RUN mkdir -p /tmp/ffmpeg.deb.build/DEBIAN
 RUN make install DESTDIR=/tmp/ffmpeg.deb.build
 
-COPY deb-control /tmp/ffmpeg.deb.build/DEBIAN/control
+COPY stretch/deb-control /tmp/ffmpeg.deb.build/DEBIAN/control
 RUN sed -i -e "s/@VERSION@/${FFMPEG_VERSION}/ ; s/@BUILD@/$(date +%Y%m%d%H%M%S)/" /tmp/ffmpeg.deb.build/DEBIAN/control
 RUN dpkg -b /tmp/ffmpeg.deb.build /tmp/ffmpeg-${FFMPEG_VERSION}.deb
 

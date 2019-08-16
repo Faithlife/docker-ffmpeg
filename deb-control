@@ -1,5 +1,0 @@
-Package: ffmpeg
-Version: @VERSION@-@BUILD@
-Architecture: amd64
-Depends: libfdk-aac1, libmp3lame0, libtheora0, libvorbis0a, libvorbisenc2, libvorbisfile3, libvpx4, libx264-148, libx265-95
-Description: ffmpeg
