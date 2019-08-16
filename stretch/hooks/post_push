@@ -1,0 +1,2 @@
+docker tag $IMAGE_NAME $DOCKER_REPO:stretch
+docker push $DOCKER_REPO:stretch
