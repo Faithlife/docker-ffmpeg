@@ -1,3 +1,5 @@
 #!/bin/sh
+docker tag $IMAGE_NAME $DOCKER_REPO:4.2-stretch
+docker push $DOCKER_REPO:4.2-stretch
 docker tag $IMAGE_NAME $DOCKER_REPO:stretch
 docker push $DOCKER_REPO:stretch

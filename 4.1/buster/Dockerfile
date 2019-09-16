@@ -1,7 +1,7 @@
-FROM debian:9 AS builder
+FROM debian:10 AS builder
 
-RUN sed -e '/stretch main/d' -i /etc/apt/sources.list && \
-  echo "deb http://deb.debian.org/debian stretch main non-free" >> /etc/apt/sources.list
+RUN sed -e '/uster main/d' -i /etc/apt/sources.list && \
+  echo "deb http://deb.debian.org/debian buster main non-free" >> /etc/apt/sources.list
 
 RUN apt-get update && \
   apt-get install -y \
@@ -25,8 +25,8 @@ RUN apt-get update && \
     yasm \
     zlib1g-dev
 
-ARG FFMPEG_VERSION=4.2
-ARG FFMPEG_SHA256SUM=306bde5f411e9ee04352d1d3de41bd3de986e42e2af2a4c44052dce1ada26fb8
+ARG FFMPEG_VERSION=4.1
+ARG FFMPEG_SHA256SUM=b684fb43244a5c4caae652af9022ed5d85ce15210835bce054a33fb26033a1a5
 
 WORKDIR /usr/local/src
 RUN wget -q http://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.bz2 && \
@@ -57,14 +57,13 @@ RUN make
 RUN mkdir -p /tmp/ffmpeg.deb.build/DEBIAN
 RUN make install DESTDIR=/tmp/ffmpeg.deb.build
 
-COPY stretch/deb-control /tmp/ffmpeg.deb.build/DEBIAN/control
+COPY 4.1/buster/deb-control /tmp/ffmpeg.deb.build/DEBIAN/control
 RUN sed -i -e "s/@VERSION@/${FFMPEG_VERSION}/ ; s/@BUILD@/$(date +%Y%m%d%H%M%S)/" /tmp/ffmpeg.deb.build/DEBIAN/control
 RUN dpkg -b /tmp/ffmpeg.deb.build /tmp/ffmpeg-${FFMPEG_VERSION}.deb
 
-FROM debian:9-slim
+FROM debian:10-slim
 
-RUN sed -e '/stretch main/d' -i /etc/apt/sources.list && \
-  echo "deb http://deb.debian.org/debian stretch main non-free" >> /etc/apt/sources.list
+RUN echo "deb http://deb.debian.org/debian buster main non-free" >> /etc/apt/sources.list
 
 COPY --from=builder /tmp/ffmpeg-*.deb /opt/ffmpeg/
 RUN apt-get update && \
