@@ -9,6 +9,7 @@ RUN apt-get update && \
     automake \
     build-essential \
     ca-certificates \
+    libaom-dev \
     libfdk-aac-dev \
     libmp3lame-dev \
     libnuma-dev \
@@ -43,6 +44,7 @@ RUN ./configure \
     --disable-ffplay \
     --disable-shared \
     --enable-gpl \
+    --enable-libaom \
     --enable-libfdk_aac \
     --enable-libmp3lame \
     --enable-libopus \
