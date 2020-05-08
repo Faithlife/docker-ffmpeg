@@ -10,6 +10,7 @@ RUN apt-get update && \
     automake \
     build-essential \
     ca-certificates \
+    devscripts \
     libaom-dev \
     libfdk-aac-dev \
     libmp3lame-dev \
