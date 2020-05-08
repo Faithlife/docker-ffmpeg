@@ -37,8 +37,8 @@ RUN debuild -us -uc
 WORKDIR /usr/local/src
 RUN apt-get install ./libvpx6_*_amd64.deb ./libvpx-dev_*_amd64.deb
 
-ARG FFMPEG_VERSION=4.2
-ARG FFMPEG_SHA256SUM=306bde5f411e9ee04352d1d3de41bd3de986e42e2af2a4c44052dce1ada26fb8
+ARG FFMPEG_VERSION=4.2.2
+ARG FFMPEG_SHA256SUM=b620d187c26f76ca19e74210a0336c3b8380b97730df5cdf45f3e69e89000e5c
 
 WORKDIR /usr/local/src
 RUN wget -q http://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.bz2 && \
