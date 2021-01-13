@@ -10,6 +10,10 @@ A build of [ffmpeg](https://ffmpeg.org).
 - Debian 9 (stretch)
 - Debian 10 (buster)
 
+## ffmpeg version 4.3
+
+- Debian 10 (buster)
+
 Docker build commands must be ran at repository root.
 
 i.e. `docker build -t faithlife/ffmpeg:4.2-buster -f 4.2/buster/Dockerfile .`
