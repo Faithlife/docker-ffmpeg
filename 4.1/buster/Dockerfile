@@ -1,6 +1,6 @@
 FROM debian:10 AS builder
 
-RUN sed -e '/uster main/d' -i /etc/apt/sources.list && \
+RUN sed -e '/buster main/d' -i /etc/apt/sources.list && \
   echo "deb http://deb.debian.org/debian buster main non-free" >> /etc/apt/sources.list
 
 RUN apt-get update && \
