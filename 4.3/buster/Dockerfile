@@ -50,6 +50,7 @@ RUN ./configure \
     --enable-libopus \
     --enable-libvorbis \
     --enable-libvpx \
+    --enable-libwebp \
     --enable-libx264 \
     --enable-libx265 \
     --enable-nonfree \

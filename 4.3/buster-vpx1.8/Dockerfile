@@ -20,6 +20,7 @@ RUN apt-get update && \
     libtheora-dev \
     libtool \
     libvorbis-dev \
+    libwebp-dev \
     libx264-dev \
     libx265-dev \
     pkg-config \
@@ -61,6 +62,7 @@ RUN ./configure \
     --enable-libopus \
     --enable-libvorbis \
     --enable-libvpx \
+    --enable-libwebp \
     --enable-libx264 \
     --enable-libx265 \
     --enable-nonfree \
