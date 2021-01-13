@@ -19,6 +19,7 @@ RUN apt-get update && \
     libtool \
     libvorbis-dev \
     libvpx-dev \
+    libwebp-dev \
     libx264-dev \
     libx265-dev \
     pkg-config \
