@@ -1,8 +1,7 @@
 FROM debian:10 AS builder
 
 RUN sed -e '/buster main/d' -i /etc/apt/sources.list && \
-  echo "deb http://deb.debian.org/debian buster main non-free" >> /etc/apt/sources.list && \
-  echo "deb-src http://ftp.debian.org/debian testing main contrib non-free" >> /etc/apt/sources.list
+  echo "deb http://deb.debian.org/debian buster main non-free" >> /etc/apt/sources.list
 
 RUN apt-get update && \
   apt-get install -y \
@@ -11,6 +10,9 @@ RUN apt-get update && \
     build-essential \
     ca-certificates \
     devscripts \
+    dh-exec \
+    doxygen \
+    git-buildpackage \
     libaom-dev \
     libfdk-aac-dev \
     libmp3lame-dev \
@@ -29,12 +31,10 @@ RUN apt-get update && \
     zlib1g-dev
 
 WORKDIR /usr/local/src
-
-RUN apt-get install -y 
-RUN apt-get source libvpx
-RUN apt-get build-dep -y libvpx
-WORKDIR /usr/local/src/libvpx-1.8.2
-RUN debuild -us -uc
+RUN git clone https://salsa.debian.org/multimedia-team/libvpx.git
+WORKDIR /usr/local/src/libvpx
+RUN git checkout -b 1.8 debian/1.8.2-1
+RUN gbp buildpackage --git-ignore-branch --git-no-pristine-tar --git-builder="debuild -i -I -uc -us"
 WORKDIR /usr/local/src
 RUN apt-get install ./libvpx6_*_amd64.deb ./libvpx-dev_*_amd64.deb
 
