@@ -72,7 +72,7 @@ RUN make
 RUN mkdir -p /tmp/ffmpeg.deb.build/DEBIAN
 RUN make install DESTDIR=/tmp/ffmpeg.deb.build -j
 
-COPY 4.3/buster/deb-control /tmp/ffmpeg.deb.build/DEBIAN/control
+COPY 4.3/buster-vpx1.8/deb-control /tmp/ffmpeg.deb.build/DEBIAN/control
 RUN sed -i -e "s/@VERSION@/${FFMPEG_VERSION}/ ; s/@BUILD@/$(date +%Y%m%d%H%M%S)/" /tmp/ffmpeg.deb.build/DEBIAN/control
 RUN dpkg -b /tmp/ffmpeg.deb.build /tmp/ffmpeg-${FFMPEG_VERSION}.deb
 
