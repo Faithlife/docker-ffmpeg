@@ -29,7 +29,7 @@ ARG FFMPEG_VERSION=4.2.2
 ARG FFMPEG_SHA256SUM=b620d187c26f76ca19e74210a0336c3b8380b97730df5cdf45f3e69e89000e5c
 
 WORKDIR /usr/local/src
-RUN wget -q http://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.bz2 && \
+RUN wget -q https://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.bz2 && \
   echo "${FFMPEG_SHA256SUM}  ffmpeg-${FFMPEG_VERSION}.tar.bz2" | sha256sum -c && \
   tar xf ffmpeg-${FFMPEG_VERSION}.tar.bz2 && \
   rm ffmpeg-${FFMPEG_VERSION}.tar.bz2
