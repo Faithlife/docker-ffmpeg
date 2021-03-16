@@ -38,6 +38,15 @@ RUN gbp buildpackage --git-ignore-branch --git-no-pristine-tar --git-builder="de
 WORKDIR /usr/local/src
 RUN apt-get install ./libvpx6_*_amd64.deb ./libvpx-dev_*_amd64.deb
 
+WORKDIR /usr/local/src
+RUN git clone https://salsa.debian.org/multimedia-team/zimg.git
+WORKDIR /usr/local/src/zimg
+RUN git checkout -b 3.0.1 debian/3.0.1+ds1-2
+RUN sed -e 's/debhelper-compat (= 13)/debhelper-compat (= 12)/' -i debian/control
+RUN gbp buildpackage --git-ignore-new --git-ignore-branch --git-no-pristine-tar --git-builder="debuild -i -I -uc -us"
+WORKDIR /usr/local/src
+RUN apt-get install ./libzimg2_*_amd64.deb ./libzimg-dev_*_amd64.deb
+
 ARG FFMPEG_VERSION=4.3.1
 ARG FFMPEG_SHA256SUM=f4a4ac63946b6eee3bbdde523e298fca6019d048d6e1db0d1439a62cea65f0d9
 
@@ -65,6 +74,7 @@ RUN ./configure \
     --enable-libwebp \
     --enable-libx264 \
     --enable-libx265 \
+    --enable-libzimg \
     --enable-nonfree \
     --enable-openssl
 RUN make
@@ -80,9 +90,9 @@ FROM debian:10-slim
 
 RUN echo "deb http://deb.debian.org/debian buster main non-free" >> /etc/apt/sources.list
 
-COPY --from=builder /tmp/ffmpeg-*.deb /usr/local/src/libvpx*.deb /opt/ffmpeg/
+COPY --from=builder /tmp/ffmpeg-*.deb /usr/local/src/libvpx*.deb /usr/local/src/libzimg*.deb /opt/ffmpeg/
 RUN apt-get update && \
-  apt-get install -y /opt/ffmpeg/ffmpeg-*.deb /opt/ffmpeg/libvpx6_*_amd64.deb && \
+  apt-get install -y /opt/ffmpeg/ffmpeg-*.deb /opt/ffmpeg/libvpx6_*_amd64.deb /opt/ffmpeg/libzimg2_*_amd64.deb && \
   rm -rf /var/lib/apt/lists/*
 
 ENV PATH=${PATH}:/opt/ffmpeg/bin
