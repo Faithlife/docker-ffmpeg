@@ -13,6 +13,7 @@ A build of [ffmpeg](https://ffmpeg.org).
 ## ffmpeg version 4.3
 
 - Debian 10 (buster)
+- Debian 11 (bullseye)
 
 Docker build commands must be run at the repository root.
 
