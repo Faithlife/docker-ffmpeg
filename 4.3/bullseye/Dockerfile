@@ -70,7 +70,7 @@ RUN ./configure \
     --enable-libzimg \
     --enable-nonfree \
     --enable-openssl
-RUN make
+RUN make -j
 
 RUN mkdir -p /tmp/ffmpeg.deb.build/DEBIAN
 RUN make install DESTDIR=/tmp/ffmpeg.deb.build -j
