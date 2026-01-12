@@ -14,6 +14,7 @@ A build of [ffmpeg](https://ffmpeg.org).
 
 - Debian 10 (buster)
 - Debian 11 (bullseye)
+- Debian 12 (bookworm)
 
 Docker build commands must be run at the repository root.
 
